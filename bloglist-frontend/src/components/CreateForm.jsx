@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
 
-const CreateForm = ({ blogs, setBlogs, errorMessage, setErrorMessage }) => {
+const CreateForm = ({ errorMessage, setErrorMessage }) => {
   const [blogTitle, setBlogTitle] = useState('')
   const [blogAuthor, setBlogAuthor] = useState('')
   const [blogUrl, setBlogUrl] = useState('')
@@ -9,7 +9,7 @@ const CreateForm = ({ blogs, setBlogs, errorMessage, setErrorMessage }) => {
   const createBlog = async (event) => {
     event.preventDefault()
 
-    // A new blog. The backend handles the likes and user properties.
+    // A new blog. The backend handles the 'likes' and 'user' properties.
     const newBlogObject = {
       title: blogTitle,
       author: blogAuthor,
@@ -19,11 +19,18 @@ const CreateForm = ({ blogs, setBlogs, errorMessage, setErrorMessage }) => {
     try {   
       blogService.create(newBlogObject)
       console.log('created blog', blogTitle)
+      setBlogTitle('')
+      setBlogAuthor('')
+      setBlogUrl('')
+      setErrorMessage(`a new blog ${blogTitle} by ${blogAuthor} added`)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 3000)
     } catch (exception) {
       setErrorMessage('failed creating blog: ', exception.message)
       setTimeout(() => {
         setErrorMessage(null)
-      }, 5000)
+      }, 3000)
     }
   }
 

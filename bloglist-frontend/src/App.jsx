@@ -43,10 +43,10 @@ const App = () => {
       setPassword('')
       console.log('logging in with', user.name, password)
     } catch (exception) {
-      setErrorMessage('wrong credentials')
+      setErrorMessage('wrong username or password')
       setTimeout(() => {
         setErrorMessage(null)
-      }, 5000)
+      }, 3000)
     }
   }
 
@@ -61,7 +61,7 @@ const App = () => {
       setErrorMessage('Logout failed: ', exception.message)
       setTimeout(() => {
         setErrorMessage(null)
-      }, 5000)
+      }, 3000)
     }
   }
 
@@ -96,7 +96,7 @@ const App = () => {
     <div>
       <h2>blogs</h2>
       <SignedInUser name={user.name} handleLogout={handleLogout}/>
-      <CreateForm blogs={blogs} setBlogs={setBlogs} errorMessage={errorMessage} setErrorMessage={setErrorMessage}/>
+      <CreateForm errorMessage={errorMessage} setErrorMessage={setErrorMessage}/>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
