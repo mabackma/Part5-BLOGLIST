@@ -2,13 +2,12 @@ import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
 import SignedInUser from './components/SignedInUser'
+import CreateForm from './components/CreateForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [newBlog, setNewBlog] = useState('')
-  const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('') 
@@ -20,15 +19,26 @@ const App = () => {
     )  
   }, [])
 
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+      blogService.setToken(user.token)
+    }
+  }, [])
+
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
       const user = await loginService.login({
-        username, password
+        username, password,
       })
-      setUser(user.token)   //The token returned with a successful login is saved to the application's state 'user'
+      window.localStorage.setItem(
+        'loggedBlogappUser', JSON.stringify(user)
+      ) 
+      setUser(user) 
       blogService.setToken(user.token)
-      setUser(user)
       setUsername('')
       setPassword('')
       console.log('logging in with', user.name, password)
@@ -40,7 +50,22 @@ const App = () => {
     }
   }
 
-  const loginForm = () => (
+  const handleLogout = async (event) => {
+    event.preventDefault()
+    try {
+      window.localStorage.removeItem('loggedBlogappUser')
+      console.log('logged out', user.name)
+      setUser(null)   //The user state is now null because there is no user logged in
+      blogService.setToken(null)
+    } catch (exception) {
+      setErrorMessage('Logout failed: ', exception.message)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
+  const LoginForm = () => (
     <div>
     <h2>log in to application</h2>
     <form onSubmit={handleLogin}>
@@ -67,10 +92,11 @@ const App = () => {
     </div>
   )
 
-  const blogForm = () => (
+  const BlogForm = () => (
     <div>
       <h2>blogs</h2>
-      <SignedInUser name={user.name} />
+      <SignedInUser name={user.name} handleLogout={handleLogout}/>
+      <CreateForm blogs={blogs} setBlogs={setBlogs} errorMessage={errorMessage} setErrorMessage={setErrorMessage}/>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
@@ -81,8 +107,8 @@ const App = () => {
     <div>
       <Notification message={errorMessage}/>
       {user === null ?
-        loginForm() :
-        blogForm()
+        LoginForm() :
+        BlogForm()
       }
     </div>
   )
