@@ -21,4 +21,30 @@ const create = async newObject => {
   return response.data
 }
 
-export default { getAll, create, setToken }
+const update = async (newObject, blogId) => {
+  const config = {
+    headers: { Authorization: token },
+  }
+
+  const response = await axios.put(`${baseUrl}/${blogId}`, newObject, config)
+  return response.data
+}
+
+const removeOne = async (blog) => {
+  const config = {
+    headers: { Authorization: token },
+  }
+  const confirmed = window.confirm(`Remove blog ${blog.title} by ${blog.author}`)
+
+  if(confirmed) {
+    try {
+      await axios.delete(`${baseUrl}/${blog.id}`, config)
+      return true
+    } catch (error) {
+      console.log('Error deleting blog:', error.message)
+    }
+  }
+  return false
+}
+
+export default { getAll, create, update, removeOne, setToken }
