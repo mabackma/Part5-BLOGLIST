@@ -78,6 +78,7 @@ const Blog = ({ blog, blogs, setBlogs, setErrorMessage }) => {
   )
 }
 
+// I defined the proptypes according to the blog object in the backend
 const userPropTypes = PropTypes.shape({
   id: PropTypes.string.isRequired,
 })
