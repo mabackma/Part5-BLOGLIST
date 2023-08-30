@@ -9,11 +9,11 @@ const App = () => {
   const [blogs, setBlogs] = useState([])
   const [errorMessage, setErrorMessage] = useState(null)
   const [user, setUser] = useState(null)
-  
+
   useEffect(() => {
     blogService.getAll().then(initialBlogs =>
       setBlogs( initialBlogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -43,9 +43,9 @@ const App = () => {
   const loginForm = () => {
     return (
       <div>
-        <LoginForm  
-          setErrorMessage={setErrorMessage} 
-          setUser={setUser} 
+        <LoginForm
+          setErrorMessage={setErrorMessage}
+          setUser={setUser}
         />
       </div>
     )
@@ -58,7 +58,7 @@ const App = () => {
       <BlogForm blogs={blogs} setBlogs={setBlogs} setErrorMessage={setErrorMessage}/>
     </div>
   )
-    
+
   return (
     <div>
       <Notification message={errorMessage}/>

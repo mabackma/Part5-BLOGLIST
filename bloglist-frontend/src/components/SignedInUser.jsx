@@ -6,5 +6,5 @@ const SignedInUser = ({ name, handleLogout }) => {
     </div>
   )
 }
-  
-  export default SignedInUser
+
+export default SignedInUser

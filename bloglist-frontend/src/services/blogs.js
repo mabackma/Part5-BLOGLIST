@@ -41,7 +41,7 @@ const removeOne = async (blog) => {
       await axios.delete(`${baseUrl}/${blog.id}`, config)
       return true
     } catch (error) {
-      console.log('Error deleting blog:', error.message)
+      return false
     }
   }
   return false

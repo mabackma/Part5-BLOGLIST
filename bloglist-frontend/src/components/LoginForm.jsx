@@ -3,8 +3,8 @@ import loginService from '../services/login'
 import blogService from '../services/blogs'
 
 const LoginForm = ({ setUser, setErrorMessage }) => {
-  const [username, setUsername] = useState('') 
-  const [password, setPassword] = useState('') 
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -14,8 +14,8 @@ const LoginForm = ({ setUser, setErrorMessage }) => {
       })
       window.localStorage.setItem(
         'loggedBlogappUser', JSON.stringify(user)
-      ) 
-      setUser(user) 
+      )
+      setUser(user)
       blogService.setToken(user.token)
       setUsername('')
       setPassword('')
@@ -33,22 +33,22 @@ const LoginForm = ({ setUser, setErrorMessage }) => {
       <h2>log in to application</h2>
       <form onSubmit={handleLogin}>
         <div>
-            username
-            <input
+          username
+          <input
             type="text"
             value={username}
             name="Username"
             onChange={({ target }) => setUsername(target.value)}
-            />
+          />
         </div>
         <div>
-            password
-            <input
+          password
+          <input
             type="password"
             value={password}
             name="Password"
             onChange={({ target }) => setPassword(target.value)}
-            />
+          />
         </div>
         <button type="submit">login</button>
       </form>

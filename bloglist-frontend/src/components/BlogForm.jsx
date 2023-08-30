@@ -21,7 +21,7 @@ const BlogForm = ({ blogs, setBlogs, setErrorMessage }) => {
       url: blogUrl
     }
 
-    try {   
+    try {
       const createdBlog = await blogService.create(newBlogObject)
       console.log('created blog', blogTitle)
       setBlogTitle('')
@@ -50,46 +50,46 @@ const BlogForm = ({ blogs, setBlogs, setErrorMessage }) => {
       </div>
 
       <div style={showWhenVisible}>
-      <h2>create new</h2>
-      <form onSubmit={createBlog}>
-        <div>
-          title:
+        <h2>create new</h2>
+        <form onSubmit={createBlog}>
+          <div>
+            title:
             <input
-            type="text"
-            value={blogTitle}
-            name="Title"
-            onChange={({ target }) => setBlogTitle(target.value)}
-          />
-        </div>
-        <div>
-          author:
+              type="text"
+              value={blogTitle}
+              name="Title"
+              onChange={({ target }) => setBlogTitle(target.value)}
+            />
+          </div>
+          <div>
+            author:
             <input
-            type="text"
-            value={blogAuthor}
-            name="Author"
-            onChange={({ target }) => setBlogAuthor(target.value)}
-          />
-        </div>
-        <div>
-          url:
+              type="text"
+              value={blogAuthor}
+              name="Author"
+              onChange={({ target }) => setBlogAuthor(target.value)}
+            />
+          </div>
+          <div>
+            url:
             <input
-            type="text"
-            value={blogUrl}
-            name="Url"
-            onChange={({ target }) => setBlogUrl(target.value)}
-          />
-        </div>
+              type="text"
+              value={blogUrl}
+              name="Url"
+              onChange={({ target }) => setBlogUrl(target.value)}
+            />
+          </div>
+          <div>
+            <button type="submit">create</button>
+          </div>
+        </form>
         <div>
-          <button type="submit">create</button>
-        </div> 
-      </form>
-      <div>
-        <button onClick={() => setCreateVisible(false)}>cancel</button> 
-      </div>
+          <button onClick={() => setCreateVisible(false)}>cancel</button>
+        </div>
       </div>
 
       {sortedBlogs.map(blog =>
-        <Blog key={blog.id} blog={blog} blogs={blogs} setBlogs={setBlogs} />
+        <Blog key={blog.id} blog={blog} blogs={blogs} setBlogs={setBlogs} setErrorMessage={setErrorMessage}/>
       )}
     </div>
   )
