@@ -1,17 +1,18 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import blogService from '../services/blogs'
 import Blog from '../components/Blog'
 import lodash from 'lodash'
+import Togglable from '../components/Togglable'
 
 const BlogForm = ({ blogs, setBlogs, setErrorMessage }) => {
   const [blogTitle, setBlogTitle] = useState('')
   const [blogAuthor, setBlogAuthor] = useState('')
   const [blogUrl, setBlogUrl] = useState('')
-  const [createVisible, setCreateVisible] = useState(false)
-  const hideWhenVisible = { display: createVisible ? 'none' : '' }
-  const showWhenVisible = { display: createVisible ? '' : 'none' }
+
+  const blogFormRef = useRef()
 
   const createBlog = async (event) => {
+    blogFormRef.current.toggleVisibility()
     event.preventDefault()
 
     // A new blog. The backend handles the 'likes' and 'user' properties.
@@ -45,11 +46,7 @@ const BlogForm = ({ blogs, setBlogs, setErrorMessage }) => {
 
   return (
     <div>
-      <div style={hideWhenVisible}>
-        <button onClick={() => setCreateVisible(true)}>create new blog</button>
-      </div>
-
-      <div style={showWhenVisible}>
+      <Togglable buttonLabel="create new blog" ref={blogFormRef} >
         <h2>create new</h2>
         <form onSubmit={createBlog}>
           <div>
@@ -83,10 +80,7 @@ const BlogForm = ({ blogs, setBlogs, setErrorMessage }) => {
             <button type="submit">create</button>
           </div>
         </form>
-        <div>
-          <button onClick={() => setCreateVisible(false)}>cancel</button>
-        </div>
-      </div>
+      </Togglable>
 
       {sortedBlogs.map(blog =>
         <Blog key={blog.id} blog={blog} blogs={blogs} setBlogs={setBlogs} setErrorMessage={setErrorMessage}/>
