@@ -15,6 +15,9 @@ const Blog = ({ blog, blogs, setBlogs, setErrorMessage }) => {
 
   const getUsername = () => {
     const userString = window.localStorage.getItem('loggedBlogappUser')
+    if(userString === null) {
+      return ''
+    }
     const user = JSON.parse(userString)
     return user.name
   }
