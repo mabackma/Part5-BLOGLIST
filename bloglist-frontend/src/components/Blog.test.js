@@ -15,6 +15,11 @@ test('renders content', () => {
   render(<Blog blog={blog} toggleVisibility={mockHandler}/>)
 
   const titleAuthorElement = screen.queryAllByText('test title test author')
-  screen.debug()
-  expect(titleAuthorElement).toBeDefined()
+  expect(titleAuthorElement).not.toHaveLength(0)
+
+  const urlElement = screen.queryAllByText('test url')
+  expect(urlElement).toHaveLength(0)
+
+  const likesElement = screen.queryAllByText('likes 0')
+  expect(likesElement).toHaveLength(0)
 })
