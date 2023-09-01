@@ -4,12 +4,12 @@ import { useState, useImperativeHandle, forwardRef } from 'react'
 const TogglableBlog = forwardRef((props, ref) => {
   const [visible, setVisible] = useState(false)
 
-  const hideWhenVisible = { display: visible ? 'none' : '' }
-  const authorAndTitle = {
-    border: '2px solid black',
-    marginTop: '3px',
-    marginBottom: '3px',
-    padding: '2px'
+  const hideWhenVisible = { 
+    display: visible ? 'none' : '',
+    border: visible ? 'none' : '2px solid black',
+    marginTop: visible ? '0' : '3px',
+    marginBottom: visible ? '0' : '3px',
+    padding: visible ? '0' : '2px'
   }
   const showWhenVisible = {
     display: visible ? '' : 'none',
@@ -18,7 +18,6 @@ const TogglableBlog = forwardRef((props, ref) => {
     marginBottom: visible ? '3px' : '0',
     padding: visible ? '2px' : '0'
   }
-  const showWhenVisibleButton = { display: visible ? '' : 'none' }
 
   const toggleVisibility = () => {
     setVisible(!visible)
@@ -32,12 +31,13 @@ const TogglableBlog = forwardRef((props, ref) => {
 
   return (
     <div>
-      <div style={authorAndTitle}>
+      <div style={hideWhenVisible}>
         {props.blogTitle} {props.blogAuthor}&nbsp;
-        <button style={hideWhenVisible} onClick={toggleVisibility}>{props.buttonLabel}</button>
-        <button style={showWhenVisibleButton} onClick={toggleVisibility}>{props.buttonLabelExit}</button>
+        <button onClick={toggleVisibility}>{props.buttonLabel}</button>
       </div>
       <div style={showWhenVisible}>
+        {props.blogTitle} {props.blogAuthor}&nbsp;
+        <button onClick={toggleVisibility}>{props.buttonLabelExit}</button>
         {props.children}
       </div>
     </div>
