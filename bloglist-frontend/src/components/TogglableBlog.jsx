@@ -5,6 +5,12 @@ const TogglableBlog = forwardRef((props, ref) => {
   const [visible, setVisible] = useState(false)
 
   const hideWhenVisible = { display: visible ? 'none' : '' }
+  const authorAndTitle = {
+    border: '2px solid black',
+    marginTop: '3px',
+    marginBottom: '3px',
+    padding: '2px'
+  }
   const showWhenVisible = {
     display: visible ? '' : 'none',
     border: visible ? '2px solid black' : 'none',
@@ -26,7 +32,7 @@ const TogglableBlog = forwardRef((props, ref) => {
 
   return (
     <div>
-      <div>
+      <div style={authorAndTitle}>
         {props.blogTitle} {props.blogAuthor}&nbsp;
         <button style={hideWhenVisible} onClick={toggleVisibility}>{props.buttonLabel}</button>
         <button style={showWhenVisibleButton} onClick={toggleVisibility}>{props.buttonLabelExit}</button>

@@ -3,16 +3,6 @@ import blogService from '../services/blogs'
 import TogglableBlog from './TogglableBlog'
 
 const Blog = ({ blog, blogs, setBlogs, setErrorMessage }) => {
-  const [blogVisible, setBlogVisible] = useState(false)
-  const hideWhenVisible = { display: blogVisible ? 'none' : '' }
-  const showWhenVisible = {
-    display: blogVisible ? '' : 'none',
-    border: blogVisible ? '2px solid black' : 'none',
-    marginTop: blogVisible ? '3px' : '0',
-    marginBottom: blogVisible ? '3px' : '0',
-    padding: blogVisible ? '2px' : '0'
-  }
-
   const blogRef = useRef()
 
   const getUsername = () => {
