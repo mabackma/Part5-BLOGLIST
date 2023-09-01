@@ -2,7 +2,7 @@ import { useState, useRef } from 'react'
 import blogService from '../services/blogs'
 import Blog from '../components/Blog'
 import lodash from 'lodash'
-import Togglable from '../components/Togglable'
+import TogglableCreate from './TogglableCreate'
 
 const BlogForm = ({ blogs, setBlogs, setErrorMessage }) => {
   const [blogTitle, setBlogTitle] = useState('')
@@ -46,7 +46,7 @@ const BlogForm = ({ blogs, setBlogs, setErrorMessage }) => {
 
   return (
     <div>
-      <Togglable buttonLabel="create new blog" buttonLabelExit="cancel" ref={blogFormRef} >
+      <TogglableCreate buttonLabel="create new blog" buttonLabelExit="cancel" ref={blogFormRef} >
         <h2>create new</h2>
         <form onSubmit={createBlog}>
           <div>
@@ -80,7 +80,7 @@ const BlogForm = ({ blogs, setBlogs, setErrorMessage }) => {
             <button type="submit">create</button>
           </div>
         </form>
-      </Togglable>
+      </TogglableCreate>
 
       {sortedBlogs.map(blog =>
         <Blog key={blog.id} blog={blog} blogs={blogs} setBlogs={setBlogs} setErrorMessage={setErrorMessage}/>
