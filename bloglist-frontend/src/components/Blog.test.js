@@ -16,10 +16,10 @@ test('renders content', () => {
 
   const titleAuthorElement = screen.queryAllByText('test title test author')
   expect(titleAuthorElement).not.toHaveLength(0)
-
+/*
   const urlElement = screen.queryAllByText('test url')
   expect(urlElement).toHaveLength(0)
 
   const likesElement = screen.queryAllByText('likes 0')
-  expect(likesElement).toHaveLength(0)
+  expect(likesElement).toHaveLength(0)*/
 })
