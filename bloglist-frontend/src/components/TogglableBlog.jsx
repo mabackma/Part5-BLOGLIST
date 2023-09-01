@@ -4,7 +4,7 @@ import { useState, useImperativeHandle, forwardRef } from 'react'
 const TogglableBlog = forwardRef((props, ref) => {
   const [visible, setVisible] = useState(false)
 
-  const hideWhenVisible = { 
+  const hideWhenVisible = {
     display: visible ? 'none' : '',
     border: visible ? 'none' : '2px solid black',
     marginTop: visible ? '0' : '3px',
