@@ -62,7 +62,7 @@ const Blog = ({ blog, blogs, setBlogs, setErrorMessage }) => {
 
   return (
     <TogglableBlog
-      buttonLabel="view" 
+      buttonLabel="view"
       buttonLabelExit="hide"
       blogTitle={blog.title}
       blogAuthor={blog.author}
@@ -79,29 +79,5 @@ const Blog = ({ blog, blogs, setBlogs, setErrorMessage }) => {
     </TogglableBlog>
   )
 }
-
-/*
-  return (
-    <div>
-      <div style={hideWhenVisible}>
-        {blog.title} {blog.author}&nbsp;
-        <button onClick={() => setBlogVisible(true)}>view</button>
-      </div>
-      <div style={showWhenVisible}>
-        <div>
-          {blog.title} {blog.author}&nbsp;
-          <button onClick={() => setBlogVisible(false)}>hide</button>
-        </div>
-        <div>{blog.url}</div>
-        <div>
-          likes {blog.likes}&nbsp;
-          <button onClick={() => addLike()}>like</button>
-        </div>
-        <div>{getUsername()}</div>
-        <button onClick={() => removeBlog()}>remove</button>
-      </div>
-    </div>
-  )
-}*/
 
 export default Blog
