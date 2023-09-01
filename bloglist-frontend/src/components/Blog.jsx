@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import blogService from '../services/blogs'
+import TogglableBlog from './TogglableBlog'
 
 const Blog = ({ blog, blogs, setBlogs, setErrorMessage }) => {
   const [blogVisible, setBlogVisible] = useState(false)
@@ -11,6 +12,8 @@ const Blog = ({ blog, blogs, setBlogs, setErrorMessage }) => {
     marginBottom: blogVisible ? '3px' : '0',
     padding: blogVisible ? '2px' : '0'
   }
+
+  const blogRef = useRef()
 
   const getUsername = () => {
     const userString = window.localStorage.getItem('loggedBlogappUser')
@@ -58,6 +61,27 @@ const Blog = ({ blog, blogs, setBlogs, setErrorMessage }) => {
   }
 
   return (
+    <TogglableBlog
+      buttonLabel="view" 
+      buttonLabelExit="hide"
+      blogTitle={blog.title}
+      blogAuthor={blog.author}
+      ref={blogRef} >
+      <div>{blog.url}</div>
+      <div>
+        likes {blog.likes}&nbsp;
+        <button onClick={() => addLike()}>like</button>
+      </div>
+      <div>{getUsername()}</div>
+      <div>
+        <button onClick={() => removeBlog()}>remove</button>
+      </div>
+    </TogglableBlog>
+  )
+}
+
+/*
+  return (
     <div>
       <div style={hideWhenVisible}>
         {blog.title} {blog.author}&nbsp;
@@ -78,6 +102,6 @@ const Blog = ({ blog, blogs, setBlogs, setErrorMessage }) => {
       </div>
     </div>
   )
-}
+}*/
 
 export default Blog

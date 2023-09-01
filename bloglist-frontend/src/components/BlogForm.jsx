@@ -46,7 +46,7 @@ const BlogForm = ({ blogs, setBlogs, setErrorMessage }) => {
 
   return (
     <div>
-      <Togglable buttonLabel="create new blog" ref={blogFormRef} >
+      <Togglable buttonLabel="create new blog" buttonLabelExit="cancel" ref={blogFormRef} >
         <h2>create new</h2>
         <form onSubmit={createBlog}>
           <div>
