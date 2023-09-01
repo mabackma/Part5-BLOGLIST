@@ -2,8 +2,6 @@ import React from 'react'
 import '@testing-library/jest-dom'
 import { render, screen, fireEvent } from '@testing-library/react'
 import Blog from './Blog'
-import TogglableBlog from './TogglableBlog'
-import userEvent from '@testing-library/user-event'
 
 test('renders content', () => {
   const blog = {
