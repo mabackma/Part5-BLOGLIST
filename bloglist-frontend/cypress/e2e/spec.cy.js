@@ -1,8 +1,6 @@
-import LoginForm from '../../src/components/LoginForm'
-
 describe('Blog app', function() {
   beforeEach(function() {
-    cy.request('POST', 'http://localhost:3003/api/testing/reset')
+    cy.request('POST', `${Cypress.env('BACKEND')}/testing/reset`)
 
     const user = {
       name: 'Matti Luukkainen',
@@ -10,8 +8,8 @@ describe('Blog app', function() {
       password: 'salainen'
     }
 
-    cy.request('POST', 'http://localhost:3003/api/users/', user)
-    cy.visit('http://localhost:5173')
+    cy.request('POST', `${Cypress.env('BACKEND')}/users/`, user)
+    cy.visit('')
   })
 
   it('Login form is shown', function() {
@@ -24,21 +22,51 @@ describe('Blog app', function() {
 
   describe('Login',function() {
     it('succeeds with correct credentials', function() {
-      cy.visit('http://localhost:5173')
+      cy.visit('')
       cy.get('#username').type('mluukkai')
       cy.get('#password').type('salainen')
       cy.get('#login-button').click()
 
-      cy.contains('Matti Luukkainen logged in')
+      cy.get('.signedIn').should('contain', 'Matti Luukkainen logged in')
+      cy.get('.signedIn').find('button').should('exist').should('have.text', 'Logout')
     })
 
     it('fails with wrong credentials', function() {
-      cy.visit('http://localhost:5173')
+      cy.visit('')
       cy.get('#username').type('non-existent user')
       cy.get('#password').type('not a real password')
       cy.get('#login-button').click()
 
-      cy.contains('wrong username or password')
+      cy.get('.error').should('contain', 'wrong username or password')
+      cy.get('.error').should('have.css', 'border-style', 'solid')
     })
   })
+
+  describe('When logged in', function() {
+    beforeEach(function() {
+      cy.login({ username: 'mluukkai', password: 'salainen' })
+    })
+
+    it('A blog can be created', function () {
+      cy.getBlogs().then(previousBlogs => {
+        // Create new blog
+        cy.createBlog({
+          title: 'a new blog',
+          author: 'cypress',
+          url: 'url to new blog',
+        })
+
+        // Check that the length of the blogs array is one more than before
+        cy.getBlogs().then(currentBlogs => {
+          expect(currentBlogs.body.length).to.equal(previousBlogs.body.length + 1)
+        })
+      })
+    })
+
+    it('A user can like a blog', function () {
+
+
+    })
+  })
+
 })

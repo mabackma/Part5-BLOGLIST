@@ -1,6 +1,6 @@
 const SignedInUser = ({ name, handleLogout }) => {
   return (
-    <div>
+    <div className="signedIn">
       {name} logged in <button onClick={handleLogout}>Logout</button>
       <br /><br />
     </div>
