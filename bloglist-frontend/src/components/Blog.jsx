@@ -58,7 +58,7 @@ const Blog = ({ blog, blogs, setBlogs, setErrorMessage }) => {
       blogAuthor={blog.author}
       ref={blogRef} >
       <div>{blog.url}</div>
-      <div>
+      <div className='likes'>
         likes {blog.likes}&nbsp;
         <button onClick={() => addLike()}>like</button>
       </div>

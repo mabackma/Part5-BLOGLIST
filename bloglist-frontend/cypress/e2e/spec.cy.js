@@ -13,7 +13,7 @@ describe('Blog app', function() {
   })
 
   it('Login form is shown', function() {
-    cy.get('.login-form-container').should('exist')   // LoginFrom is present
+    cy.get('.login-form-container').should('exist')   // LoginForm is present
     cy.contains('log in to application')
     cy.contains('username')
     cy.contains('password')
@@ -64,8 +64,18 @@ describe('Blog app', function() {
     })
 
     it('A user can like a blog', function () {
+      // Add like and verify that the new blog has one like
+      cy.addLike().then(() => {
+        cy.get('.likes').should('contain', 'likes 1')
+      })
+    })
 
+    it('A user can delete a blog they created', function() {
+      cy.blogDeleted()
+    })
 
+    it('Another user cannot delete a blog', function() {
+      cy.blogNotDeleted()
     })
   })
 

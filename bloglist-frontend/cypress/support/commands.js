@@ -28,3 +28,71 @@ Cypress.Commands.add('getBlogs', () => {
     }
   })
 })
+
+Cypress.Commands.add('addLike', () => {
+  // Create a new blog
+  cy.createBlog({
+    title: 'a likeable blog',
+    author: 'cypress',
+    url: 'url to likeable blog',
+  })
+
+  // View the details of the new blog and press the like button
+  cy.contains('likeable').contains('view').click().then(visibleBlog => {
+    cy.get('.likes').contains('like').click().then(likedBlog => {
+      return likedBlog
+    })
+  })
+
+  Cypress.Commands.add('blogDeleted', () => {
+    // Create a new blog
+    cy.createBlog({
+      title: 'Blog to be deleted',
+      author: 'cypress',
+      url: 'url to deleting blog',
+    })
+
+    // Verify that the blog exists on the page
+    cy.contains('Blog to be deleted').should('exist')
+
+    cy.contains('to be deleted').contains('view').click()
+    cy.contains('remove').click()
+
+    // Verify that the blog no longer exists on the page
+    cy.contains('Blog to be deleted').should('not.exist')
+  })
+
+  Cypress.Commands.add('blogNotDeleted', () => {
+    // Create a new blog
+    cy.createBlog({
+      title: 'Blog to be deleted',
+      author: 'cypress',
+      url: 'url to deleting blog',
+    })
+
+    // Log out current user
+    cy.contains('Logout').click()
+
+    // Create new user
+    const user = {
+      name: 'ML 2',
+      username: 'mluukkai2',
+      password: 'salainen2'
+    }
+    cy.request('POST', `${Cypress.env('BACKEND')}/users/`, user)
+
+    // Log in new user
+    cy.get('#username').type('mluukkai2')
+    cy.get('#password').type('salainen2')
+    cy.get('#login-button').click()
+
+    // Verify that the blog exists on the page
+    cy.contains('Blog to be deleted').should('exist')
+
+    cy.contains('to be deleted').contains('view').click()
+    cy.contains('remove').click()
+
+    // Verify that the blog still exists on the page
+    cy.contains('Blog to be deleted').should('exist')
+  })
+})
